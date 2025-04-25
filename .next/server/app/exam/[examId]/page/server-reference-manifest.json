@@ -1,0 +1,16 @@
+{
+  "node": {
+    "40db1a3cf281ab1b11014386cb422ae5b3f48fdefb": {
+      "workers": {
+        "app/exam/[examId]/page": {
+          "moduleId": "[project]/.next-internal/server/app/exam/[examId]/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/ai/flows/generate-grading-report.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/exam/[examId]/page": "action-browser"
+      }
+    }
+  },
+  "edge": {}
+}
