@@ -6,10 +6,8 @@ import { useEffect, useState } from "react";
 import { Exam, Task } from "@/types";
 import { generateGradingReport } from "@/ai/flows/generate-grading-report";
 import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useParams } from "next/navigation";
-import { v4 as uuidv4 } from "uuid";
 import { CreateTaskDialog } from "@/components/create-task-dialog";
 
 const examsData: Exam[] = [
@@ -171,6 +169,7 @@ export default function ExamPage() {
               accept="image/*"
               onChange={handleImageUpload}
               className="hidden"
+              capture={false} // Запрещаем использование камеры
             />
           </label>
           {image && (
