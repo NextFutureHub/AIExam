@@ -1,13 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import { Exam, Task } from "@/types";
 import { generateGradingReport } from "@/ai/flows/generate-grading-report";
@@ -17,8 +11,6 @@ import { useToast } from "@/hooks/use-toast";
 import { useParams } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 import { CreateTaskDialog } from "@/components/create-task-dialog";
-
-import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
 
 const examsData: Exam[] = [
   {
@@ -169,26 +161,18 @@ export default function ExamPage() {
           <h3 className="text-xl font-semibold text-foreground">
             Upload Student Work
           </h3>
-          <Button
-            onClick={async () => {
-              try {
-                const photo = await Camera.getPhoto({
-                  resultType: CameraResultType.DataUrl,
-                  source: CameraSource.Photos,
-                  quality: 90,
-                });
-                setImage(photo.dataUrl);
-              } catch (error) {
-                toast({
-                  title: "Image Selection Cancelled",
-                  description:
-                    "Выбор изображения был отменён или произошла ошибка.",
-                });
-              }
-            }}
-          >
-            Выбрать изображение из галереи
-          </Button>
+          {/* Скрытый инпут с возможностью выбора изображения только из галереи */}
+          <label className="inline-block">
+            <Button asChild>
+              <span>Выбрать изображение из галереи</span>
+            </Button>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              className="hidden"
+            />
+          </label>
           {image && (
             <img
               src={image}
