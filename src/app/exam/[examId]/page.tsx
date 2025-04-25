@@ -9,7 +9,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useParams } from "next/navigation";
 import { CreateTaskDialog } from "@/components/create-task-dialog";
-import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
 import { launchImageLibrary } from "react-native-image-picker";
 
 const examsData: Exam[] = [
