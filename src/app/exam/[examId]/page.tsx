@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useParams } from "next/navigation";
 import { CreateTaskDialog } from "@/components/create-task-dialog";
 import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
+import { launchImageLibrary } from "react-native-image-picker";
 
 const examsData: Exam[] = [
   {
@@ -65,20 +66,34 @@ export default function ExamPage() {
 
   const handleImageUpload = async () => {
     try {
-      const photo = await Camera.getPhoto({
-        quality: 100,
-        resultType: CameraResultType.DataUrl,
-        source: CameraSource.Photos, // 📁 Только из галереи
-        allowEditing: false,
-      });
-
-      if (photo?.dataUrl) {
-        setImage(photo.dataUrl);
-      }
+      launchImageLibrary(
+        {
+          mediaType: "photo",
+          selectionLimit: 1,
+          includeBase64: true,
+        },
+        (response) => {
+          if (response.didCancel) {
+            toast({
+              title: "Операция отменена",
+              description: "Выбор изображения был отменён пользователем.",
+            });
+          } else if (response.errorCode) {
+            toast({
+              title: "Ошибка",
+              description:
+                response.errorMessage || "Ошибка при выборе изображения.",
+            });
+          } else if (response.assets && response.assets[0].base64) {
+            const dataUrl = `data:${response.assets[0].type};base64,${response.assets[0].base64}`;
+            setImage(dataUrl);
+          }
+        }
+      );
     } catch (error) {
       toast({
         title: "Ошибка",
-        description: "Не удалось выбрать изображение из галереи.",
+        description: "Не удалось выбрать изображение.",
       });
     }
   };
@@ -169,9 +184,7 @@ export default function ExamPage() {
           <h3 className="text-xl font-semibold text-foreground">
             Upload Student Work
           </h3>
-          <Button onClick={handleImageUpload}>
-            Выбрать изображение из галереи
-          </Button>
+          <Button onClick={handleImageUpload}>Выбрать фото из галереи</Button>
           {image && (
             <img
               src={image}
