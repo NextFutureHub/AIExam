@@ -1,16 +1,24 @@
 "use client";
 
-import {Button} from "@/components/ui/button";
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
-import {useEffect, useState} from "react";
-import {Exam, Task} from "@/types";
-import {generateGradingReport} from "@/ai/flows/generate-grading-report";
-import {Textarea} from "@/components/ui/textarea";
-import {Input} from "@/components/ui/input";
-import {useToast} from "@/hooks/use-toast";
-import {useParams} from "next/navigation";
-import {v4 as uuidv4} from 'uuid';
-import {CreateTaskDialog} from "@/components/create-task-dialog";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { useEffect, useState } from "react";
+import { Exam, Task } from "@/types";
+import { generateGradingReport } from "@/ai/flows/generate-grading-report";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
+import { useParams } from "next/navigation";
+import { v4 as uuidv4 } from "uuid";
+import { CreateTaskDialog } from "@/components/create-task-dialog";
+
+import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
 
 const examsData: Exam[] = [
   {
@@ -50,12 +58,14 @@ const examsData: Exam[] = [
 ];
 
 export default function ExamPage() {
-  const {toast} = useToast();
-  const {examId} = useParams();
+  const { toast } = useToast();
+  const { examId } = useParams();
   const [exam, setExam] = useState<Exam | undefined>(undefined);
   const [selectedTask, setSelectedTask] = useState<Task | undefined>(undefined);
   const [image, setImage] = useState<string | undefined>(undefined);
-  const [gradingReport, setGradingReport] = useState<string | undefined>(undefined);
+  const [gradingReport, setGradingReport] = useState<string | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     const exam = examsData.find((exam) => exam.id === examId);
@@ -129,17 +139,21 @@ export default function ExamPage() {
   return (
     <div className="flex flex-col items-center justify-start min-h-screen py-10">
       <h1 className="text-4xl font-bold mb-4 text-primary">{exam.name}</h1>
-      <h2 className="text-2xl font-semibold mb-4 text-foreground">{exam.description}</h2>
+      <h2 className="text-2xl font-semibold mb-4 text-foreground">
+        {exam.description}
+      </h2>
       <section className="w-full max-w-4xl">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-xl font-semibold text-foreground">Tasks</h3>
-          <CreateTaskDialog onCreateTask={handleCreateTask} examId={examId}/>
+          <CreateTaskDialog onCreateTask={handleCreateTask} examId={examId} />
         </div>
         <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
           {exam.tasks.map((task) => (
             <Card
               key={task.id}
-              className={`cursor-pointer hover:shadow-md transition-shadow ${selectedTask?.id === task.id ? "bg-secondary" : ""}`}
+              className={`cursor-pointer hover:shadow-md transition-shadow ${
+                selectedTask?.id === task.id ? "bg-secondary" : ""
+              }`}
               onClick={() => setSelectedTask(task)}
             >
               <CardHeader>
@@ -152,8 +166,29 @@ export default function ExamPage() {
           ))}
         </div>
         <div className="mt-4">
-          <h3 className="text-xl font-semibold text-foreground">Upload Student Work</h3>
-          <Input type="file" accept="image/*" onChange={handleImageUpload} />
+          <h3 className="text-xl font-semibold text-foreground">
+            Upload Student Work
+          </h3>
+          <Button
+            onClick={async () => {
+              try {
+                const photo = await Camera.getPhoto({
+                  resultType: CameraResultType.DataUrl,
+                  source: CameraSource.Photos,
+                  quality: 90,
+                });
+                setImage(photo.dataUrl);
+              } catch (error) {
+                toast({
+                  title: "Image Selection Cancelled",
+                  description:
+                    "Выбор изображения был отменён или произошла ошибка.",
+                });
+              }
+            }}
+          >
+            Выбрать изображение из галереи
+          </Button>
           {image && (
             <img
               src={image}
@@ -162,15 +197,26 @@ export default function ExamPage() {
             />
           )}
         </div>
+
         <div className="mt-4">
-          <h3 className="text-xl font-semibold text-foreground">Grading Report</h3>
-          <Button onClick={handleGenerateReport} disabled={!image || !selectedTask} className="mt-2">
+          <h3 className="text-xl font-semibold text-foreground">
+            Grading Report
+          </h3>
+          <Button
+            onClick={handleGenerateReport}
+            disabled={!image || !selectedTask}
+            className="mt-2"
+          >
             Generate Report
           </Button>
           {gradingReport && (
             <Card className="mt-2">
               <CardContent>
-                <Textarea value={gradingReport} readOnly className="min-h-[200px]"/>
+                <Textarea
+                  value={gradingReport}
+                  readOnly
+                  className="min-h-[200px]"
+                />
               </CardContent>
             </Card>
           )}
