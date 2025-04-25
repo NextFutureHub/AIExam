@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useParams } from "next/navigation";
 import { CreateTaskDialog } from "@/components/create-task-dialog";
+import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
 
 const examsData: Exam[] = [
   {
@@ -62,14 +63,23 @@ export default function ExamPage() {
     setExam(exam);
   }, [examId]);
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+  const handleImageUpload = async () => {
+    try {
+      const photo = await Camera.getPhoto({
+        quality: 100,
+        resultType: CameraResultType.DataUrl,
+        source: CameraSource.Photos, // 📁 Только из галереи
+        allowEditing: false,
+      });
+
+      if (photo?.dataUrl) {
+        setImage(photo.dataUrl);
+      }
+    } catch (error) {
+      toast({
+        title: "Ошибка",
+        description: "Не удалось выбрать изображение из галереи.",
+      });
     }
   };
 
@@ -159,19 +169,9 @@ export default function ExamPage() {
           <h3 className="text-xl font-semibold text-foreground">
             Upload Student Work
           </h3>
-          {/* Скрытый инпут с возможностью выбора изображения только из галереи */}
-          <label className="inline-block">
-            <Button asChild>
-              <span>Выбрать изображение из галереи</span>
-            </Button>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
-              className="hidden"
-              capture={false} // Запрещаем использование камеры
-            />
-          </label>
+          <Button onClick={handleImageUpload}>
+            Выбрать изображение из галереи
+          </Button>
           {image && (
             <img
               src={image}
