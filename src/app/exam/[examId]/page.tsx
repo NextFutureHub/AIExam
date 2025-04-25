@@ -153,7 +153,7 @@ export default function ExamPage() {
         </div>
         <div className="mt-4">
           <h3 className="text-xl font-semibold text-foreground">Upload Student Work</h3>
-          <Input type="file" accept="image/*" onChange={handleImageUpload}/>
+          <Input type="file" accept="image/*" onChange={handleImageUpload} />
           {image && (
             <img
               src={image}

@@ -84,7 +84,7 @@ const generateGradingReportPrompt = ai.definePrompt({
       report: z.string().describe('The AI-generated grading report.'),
     }),
   },
-  prompt: `You are an AI grading assistant. Analyze the student's work in the image and generate a grading report based on the task criteria.
+  prompt: `You are an AI grading assistant. Analyze the student's work in the image and generate a grading report in Russian based on the task criteria.
 
 Task Criteria: {{{taskCriteria}}}
 
