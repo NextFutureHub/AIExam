@@ -1,11 +1,18 @@
 "use client";
 
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
-import {Button} from "@/components/ui/button";
-import {useEffect, useState} from "react";
-import {Exam, Task} from "@/types";
-import {CreateExamDialog} from "@/components/create-exam-dialog";
-import {useRouter} from "next/navigation";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import { Exam, Task } from "@/types";
+import { CreateExamDialog } from "@/components/create-exam-dialog";
+import { useRouter } from "next/navigation";
+import * as gtag from "@/utils/gtag";
 
 const examsData: Exam[] = [
   {
@@ -53,7 +60,29 @@ export default function Home() {
   }, []);
 
   const handleExamClick = (examId: string) => {
+    const selectedExam = exams.find((exam) => exam.id === examId);
+
+    if (selectedExam) {
+      gtag.event({
+        action: "click_exam_card",
+        category: "navigation",
+        label: selectedExam.name,
+        value: 1,
+      });
+    }
+
     router.push(`/exam/${examId}`);
+  };
+
+  const handleCreateExam = (newExam: Exam) => {
+    setExams([...exams, newExam]);
+
+    gtag.event({
+      action: "create_exam",
+      category: "engagement",
+      label: newExam.name,
+      value: 1,
+    });
   };
 
   return (
@@ -62,11 +91,15 @@ export default function Home() {
       <section className="w-full max-w-4xl">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-semibold text-foreground">Exams</h2>
-          <CreateExamDialog onCreateExam={(newExam) => setExams([...exams, newExam])}/>
+          <CreateExamDialog onCreateExam={handleCreateExam} />
         </div>
         <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {exams.map((exam) => (
-            <Card key={exam.id} className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => handleExamClick(exam.id)}>
+            <Card
+              key={exam.id}
+              className="cursor-pointer hover:shadow-md transition-shadow"
+              onClick={() => handleExamClick(exam.id)}
+            >
               <CardHeader>
                 <CardTitle>{exam.name}</CardTitle>
                 <CardDescription>{exam.description}</CardDescription>

@@ -1,16 +1,23 @@
 "use client";
 
-import {Button} from "@/components/ui/button";
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
-import {useEffect, useState} from "react";
-import {Exam, Task} from "@/types";
-import {generateGradingReport} from "@/ai/flows/generate-grading-report";
-import {Textarea} from "@/components/ui/textarea";
-import {Input} from "@/components/ui/input";
-import {useToast} from "@/hooks/use-toast";
-import {useParams} from "next/navigation";
-import {v4 as uuidv4} from 'uuid';
-import {CreateTaskDialog} from "@/components/create-task-dialog";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { useEffect, useState } from "react";
+import { Exam, Task } from "@/types";
+import { generateGradingReport } from "@/ai/flows/generate-grading-report";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
+import { useParams } from "next/navigation";
+import { v4 as uuidv4 } from "uuid";
+import { CreateTaskDialog } from "@/components/create-task-dialog";
+import * as gtag from "@/utils/gtag";
 
 const examsData: Exam[] = [
   {
@@ -50,12 +57,14 @@ const examsData: Exam[] = [
 ];
 
 export default function ExamPage() {
-  const {toast} = useToast();
-  const {examId} = useParams();
+  const { toast } = useToast();
+  const { examId } = useParams();
   const [exam, setExam] = useState<Exam | undefined>(undefined);
   const [selectedTask, setSelectedTask] = useState<Task | undefined>(undefined);
   const [image, setImage] = useState<string | undefined>(undefined);
-  const [gradingReport, setGradingReport] = useState<string | undefined>(undefined);
+  const [gradingReport, setGradingReport] = useState<string | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     const exam = examsData.find((exam) => exam.id === examId);
@@ -68,6 +77,14 @@ export default function ExamPage() {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImage(reader.result as string);
+
+        // Отправка события GA4: изображение загружено
+        gtag.event({
+          action: "upload_image",
+          category: "engagement",
+          label: "student_work_upload",
+          value: 1,
+        });
       };
       reader.readAsDataURL(file);
     }
@@ -89,6 +106,14 @@ export default function ExamPage() {
       return;
     }
 
+    // Отправка события GA4: пользователь нажал кнопку генерации отчёта
+    gtag.event({
+      action: "click_generate_report",
+      category: "engagement",
+      label: selectedTask.name,
+      value: 1,
+    });
+
     try {
       const report = await generateGradingReport({
         photoDataUri: image,
@@ -98,6 +123,14 @@ export default function ExamPage() {
       toast({
         title: "Success",
         description: "Grading report generated successfully.",
+      });
+
+      // Отправка события GA4: отчёт успешно сгенерирован
+      gtag.event({
+        action: "success_generate_report",
+        category: "engagement",
+        label: selectedTask.name,
+        value: 1,
       });
     } catch (error: any) {
       toast({
@@ -129,18 +162,31 @@ export default function ExamPage() {
   return (
     <div className="flex flex-col items-center justify-start min-h-screen py-10">
       <h1 className="text-4xl font-bold mb-4 text-primary">{exam.name}</h1>
-      <h2 className="text-2xl font-semibold mb-4 text-foreground">{exam.description}</h2>
+      <h2 className="text-2xl font-semibold mb-4 text-foreground">
+        {exam.description}
+      </h2>
       <section className="w-full max-w-4xl">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-xl font-semibold text-foreground">Tasks</h3>
-          <CreateTaskDialog onCreateTask={handleCreateTask} examId={examId}/>
+          <CreateTaskDialog onCreateTask={handleCreateTask} examId={examId} />
         </div>
         <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
           {exam.tasks.map((task) => (
             <Card
               key={task.id}
-              className={`cursor-pointer hover:shadow-md transition-shadow ${selectedTask?.id === task.id ? "bg-secondary" : ""}`}
-              onClick={() => setSelectedTask(task)}
+              className={`cursor-pointer hover:shadow-md transition-shadow ${
+                selectedTask?.id === task.id ? "bg-secondary" : ""
+              }`}
+              onClick={() => {
+                setSelectedTask(task);
+                // Отправка события GA4: задание выбрано
+                gtag.event({
+                  action: "select_task",
+                  category: "engagement",
+                  label: task.name,
+                  value: 1,
+                });
+              }}
             >
               <CardHeader>
                 <CardTitle>{task.name}</CardTitle>
@@ -152,7 +198,9 @@ export default function ExamPage() {
           ))}
         </div>
         <div className="mt-4">
-          <h3 className="text-xl font-semibold text-foreground">Upload Student Work</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            Upload Student Work
+          </h3>
           <Input type="file" accept="image/*" onChange={handleImageUpload} />
           {image && (
             <img
@@ -163,14 +211,24 @@ export default function ExamPage() {
           )}
         </div>
         <div className="mt-4">
-          <h3 className="text-xl font-semibold text-foreground">Grading Report</h3>
-          <Button onClick={handleGenerateReport} disabled={!image || !selectedTask} className="mt-2">
+          <h3 className="text-xl font-semibold text-foreground">
+            Grading Report
+          </h3>
+          <Button
+            onClick={handleGenerateReport}
+            disabled={!image || !selectedTask}
+            className="mt-2"
+          >
             Generate Report
           </Button>
           {gradingReport && (
             <Card className="mt-2">
               <CardContent>
-                <Textarea value={gradingReport} readOnly className="min-h-[200px]"/>
+                <Textarea
+                  value={gradingReport}
+                  readOnly
+                  className="min-h-[200px]"
+                />
               </CardContent>
             </Card>
           )}
