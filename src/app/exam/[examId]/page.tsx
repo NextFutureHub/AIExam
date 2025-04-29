@@ -58,7 +58,7 @@ const examsData: Exam[] = [
 
 export default function ExamPage() {
   const { toast } = useToast();
-  const { examId } = useParams();
+  const { examId } = useParams() as { examId: string };
   const [exam, setExam] = useState<Exam | undefined>(undefined);
   const [selectedTask, setSelectedTask] = useState<Task | undefined>(undefined);
   const [image, setImage] = useState<string | undefined>(undefined);
