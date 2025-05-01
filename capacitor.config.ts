@@ -1,9 +1,9 @@
-import type { CapacitorConfig } from '@capacitor/cli';
+import { CapacitorConfig } from "@capacitor/cli";
 
 const config: CapacitorConfig = {
-  appId: 'com.example.app',
-  appName: 'nextn',
-  webDir: 'public'
+  appId: "com.aiexam.app",
+  appName: "AIExam",
+  webDir: "out", // Убедись, что в папке `out/` есть index.html после next export
 };
 
 export default config;
