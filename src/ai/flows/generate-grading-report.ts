@@ -1,5 +1,5 @@
 // Use server directive is required to run Genkit flows in Next.js
-'use server';
+"use server";
 
 /**
  * @fileOverview AI-powered grading report generator for student work.
@@ -9,8 +9,8 @@
  * - GenerateGradingReportOutput - Output type for the generateGradingReport function.
  */
 
-import {ai} from '@/ai/ai-instance';
-import {z} from 'genkit';
+import { ai } from "@/ai/ai-instance";
+import { z } from "genkit";
 
 // Define the input schema for the grading report generation
 const GenerateGradingReportInputSchema = z.object({
@@ -21,7 +21,7 @@ const GenerateGradingReportInputSchema = z.object({
     ),
   taskCriteria: z
     .string()
-    .describe('The grading criteria for the specific task in the exam.'),
+    .describe("The grading criteria for the specific task in the exam."),
 });
 
 export type GenerateGradingReportInput = z.infer<
@@ -30,7 +30,7 @@ export type GenerateGradingReportInput = z.infer<
 
 // Define the output schema for the grading report
 const GenerateGradingReportOutputSchema = z.object({
-  report: z.string().describe('The AI-generated grading report.'),
+  report: z.string().describe("The AI-generated grading report."),
 });
 
 export type GenerateGradingReportOutput = z.infer<
@@ -38,34 +38,38 @@ export type GenerateGradingReportOutput = z.infer<
 >;
 
 // Define the tool to determine the relevancy of the student's work to the task
-const isImageRelevantToTask = ai.defineTool({
-  name: 'isImageRelevantToTask',
-  description:
-    'Determines whether the information in the image is relevant to the specified task criteria.',
-  inputSchema: z.object({
-    photoDataUri: z
-      .string()
-      .describe(
-        "A photo of the student's work, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
-      ),
-    taskCriteria: z
-      .string()
-      .describe('The grading criteria for the specific task in the exam.'),
-  }),
-  outputSchema: z.boolean().describe('True if the image is relevant, false otherwise.'),
-},
-async input => {
-  // Placeholder implementation, replace with actual logic
-  // For example, use a vision model to analyze the image content
-  // and compare it with the task criteria.
-  // In a real implementation, you would use a more sophisticated
-  // method to determine relevancy.
-  return true; // Assuming the image is always relevant for now
-});
+const isImageRelevantToTask = ai.defineTool(
+  {
+    name: "isImageRelevantToTask",
+    description:
+      "Determines whether the information in the image is relevant to the specified task criteria.",
+    inputSchema: z.object({
+      photoDataUri: z
+        .string()
+        .describe(
+          "A photo of the student's work, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
+        ),
+      taskCriteria: z
+        .string()
+        .describe("The grading criteria for the specific task in the exam."),
+    }),
+    outputSchema: z
+      .boolean()
+      .describe("True if the image is relevant, false otherwise."),
+  },
+  async (input) => {
+    // Placeholder implementation, replace with actual logic
+    // For example, use a vision model to analyze the image content
+    // and compare it with the task criteria.
+    // In a real implementation, you would use a more sophisticated
+    // method to determine relevancy.
+    return true; // Assuming the image is always relevant for now
+  }
+);
 
 // Define the prompt for generating the grading report
 const generateGradingReportPrompt = ai.definePrompt({
-  name: 'generateGradingReportPrompt',
+  name: "generateGradingReportPrompt",
   tools: [isImageRelevantToTask],
   input: {
     schema: z.object({
@@ -76,12 +80,12 @@ const generateGradingReportPrompt = ai.definePrompt({
         ),
       taskCriteria: z
         .string()
-        .describe('The grading criteria for the specific task in the exam.'),
+        .describe("The grading criteria for the specific task in the exam."),
     }),
   },
   output: {
     schema: z.object({
-      report: z.string().describe('The AI-generated grading report.'),
+      report: z.string().describe("The AI-generated grading report."),
     }),
   },
   prompt: `You are an AI grading assistant. Analyze the student's work in the image and generate a grading report in Russian based on the task criteria.
@@ -101,15 +105,17 @@ Generate a detailed report.
 const generateGradingReportFlow = ai.defineFlow<
   typeof GenerateGradingReportInputSchema,
   typeof GenerateGradingReportOutputSchema
->({
-  name: 'generateGradingReportFlow',
-  inputSchema: GenerateGradingReportInputSchema,
-  outputSchema: GenerateGradingReportOutputSchema,
-},
-async input => {
-  const {output} = await generateGradingReportPrompt(input);
-  return output!;
-});
+>(
+  {
+    name: "generateGradingReportFlow",
+    inputSchema: GenerateGradingReportInputSchema,
+    outputSchema: GenerateGradingReportOutputSchema,
+  },
+  async (input) => {
+    const { output } = await generateGradingReportPrompt(input);
+    return output!;
+  }
+);
 
 /**
  * Generates a grading report for a student's work based on the provided image and task criteria.

@@ -6,7 +6,7 @@
   "path": "static/chunks/src_app_exam_[examId]_page_tsx_cdcca6a9._.js",
   "chunks": [
     "static/chunks/node_modules_d78d457f._.js",
-    "static/chunks/src_d5b4df43._.js"
+    "static/chunks/src_b208238e._.js"
   ],
   "source": "dynamic"
 });

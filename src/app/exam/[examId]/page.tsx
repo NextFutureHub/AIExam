@@ -17,7 +17,6 @@ import { useToast } from "@/hooks/use-toast";
 import { useParams } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 import { CreateTaskDialog } from "@/components/create-task-dialog";
-import * as gtag from "@/utils/gtag";
 
 const examsData: Exam[] = [
   {
@@ -77,14 +76,6 @@ export default function ExamPage() {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImage(reader.result as string);
-
-        // Отправка события GA4: изображение загружено
-        gtag.event({
-          action: "upload_image",
-          category: "engagement",
-          label: "student_work_upload",
-          value: 1,
-        });
       };
       reader.readAsDataURL(file);
     }
@@ -106,14 +97,6 @@ export default function ExamPage() {
       return;
     }
 
-    // Отправка события GA4: пользователь нажал кнопку генерации отчёта
-    gtag.event({
-      action: "click_generate_report",
-      category: "engagement",
-      label: selectedTask.name,
-      value: 1,
-    });
-
     try {
       const report = await generateGradingReport({
         photoDataUri: image,
@@ -123,14 +106,6 @@ export default function ExamPage() {
       toast({
         title: "Success",
         description: "Grading report generated successfully.",
-      });
-
-      // Отправка события GA4: отчёт успешно сгенерирован
-      gtag.event({
-        action: "success_generate_report",
-        category: "engagement",
-        label: selectedTask.name,
-        value: 1,
       });
     } catch (error: any) {
       toast({
@@ -177,16 +152,7 @@ export default function ExamPage() {
               className={`cursor-pointer hover:shadow-md transition-shadow ${
                 selectedTask?.id === task.id ? "bg-secondary" : ""
               }`}
-              onClick={() => {
-                setSelectedTask(task);
-                // Отправка события GA4: задание выбрано
-                gtag.event({
-                  action: "select_task",
-                  category: "engagement",
-                  label: task.name,
-                  value: 1,
-                });
-              }}
+              onClick={() => setSelectedTask(task)}
             >
               <CardHeader>
                 <CardTitle>{task.name}</CardTitle>

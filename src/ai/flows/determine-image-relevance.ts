@@ -1,4 +1,4 @@
-'use server';
+"use server";
 /**
  * @fileOverview Determines if an uploaded image is relevant to a specific task based on given criteria.
  *
@@ -7,8 +7,8 @@
  * - DetermineImageRelevanceOutput - The return type for the determineImageRelevance function.
  */
 
-import {ai} from '@/ai/ai-instance';
-import {z} from 'genkit';
+import { ai } from "@/ai/ai-instance";
+import { z } from "genkit";
 
 const DetermineImageRelevanceInputSchema = z.object({
   imageDataUri: z
@@ -16,16 +16,30 @@ const DetermineImageRelevanceInputSchema = z.object({
     .describe(
       "A photo of a student's work, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
     ),
-  taskCriteria: z.string().describe('The criteria for the task assigned to the student.'),
-  taskDescription: z.string().describe('The description of the task assigned to the student.'),
+  taskCriteria: z
+    .string()
+    .describe("The criteria for the task assigned to the student."),
+  taskDescription: z
+    .string()
+    .describe("The description of the task assigned to the student."),
 });
-export type DetermineImageRelevanceInput = z.infer<typeof DetermineImageRelevanceInputSchema>;
+export type DetermineImageRelevanceInput = z.infer<
+  typeof DetermineImageRelevanceInputSchema
+>;
 
 const DetermineImageRelevanceOutputSchema = z.object({
-  isRelevant: z.boolean().describe('Whether the image is relevant to the task based on the criteria.'),
-  reason: z.string().describe('The reasoning behind the relevance determination.'),
+  isRelevant: z
+    .boolean()
+    .describe(
+      "Whether the image is relevant to the task based on the criteria."
+    ),
+  reason: z
+    .string()
+    .describe("The reasoning behind the relevance determination."),
 });
-export type DetermineImageRelevanceOutput = z.infer<typeof DetermineImageRelevanceOutputSchema>;
+export type DetermineImageRelevanceOutput = z.infer<
+  typeof DetermineImageRelevanceOutputSchema
+>;
 
 export async function determineImageRelevance(
   input: DetermineImageRelevanceInput
@@ -34,7 +48,7 @@ export async function determineImageRelevance(
 }
 
 const prompt = ai.definePrompt({
-  name: 'determineImageRelevancePrompt',
+  name: "determineImageRelevancePrompt",
   input: {
     schema: z.object({
       imageDataUri: z
@@ -42,14 +56,24 @@ const prompt = ai.definePrompt({
         .describe(
           "A photo of a student's work, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
         ),
-      taskCriteria: z.string().describe('The criteria for the task assigned to the student.'),
-      taskDescription: z.string().describe('The description of the task assigned to the student.'),
+      taskCriteria: z
+        .string()
+        .describe("The criteria for the task assigned to the student."),
+      taskDescription: z
+        .string()
+        .describe("The description of the task assigned to the student."),
     }),
   },
   output: {
     schema: z.object({
-      isRelevant: z.boolean().describe('Whether the image is relevant to the task based on the criteria.'),
-      reason: z.string().describe('The reasoning behind the relevance determination.'),
+      isRelevant: z
+        .boolean()
+        .describe(
+          "Whether the image is relevant to the task based on the criteria."
+        ),
+      reason: z
+        .string()
+        .describe("The reasoning behind the relevance determination."),
     }),
   },
   prompt: `You are an AI assistant helping teachers determine the relevance of student work images to specific tasks.
@@ -67,12 +91,12 @@ const determineImageRelevanceFlow = ai.defineFlow<
   typeof DetermineImageRelevanceOutputSchema
 >(
   {
-    name: 'determineImageRelevanceFlow',
+    name: "determineImageRelevanceFlow",
     inputSchema: DetermineImageRelevanceInputSchema,
     outputSchema: DetermineImageRelevanceOutputSchema,
   },
-  async input => {
-    const {output} = await prompt(input);
+  async (input) => {
+    const { output } = await prompt(input);
     return output!;
   }
 );

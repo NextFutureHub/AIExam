@@ -930,7 +930,7 @@ function ExamPage() {
             children: "Exam not found"
         }, void 0, false, {
             fileName: "[project]/src/app/exam/[examId]/page.tsx",
-            lineNumber: 126,
+            lineNumber: 134,
             columnNumber: 12
         }, this);
     }
@@ -942,7 +942,7 @@ function ExamPage() {
                 children: exam.name
             }, void 0, false, {
                 fileName: "[project]/src/app/exam/[examId]/page.tsx",
-                lineNumber: 131,
+                lineNumber: 139,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -950,7 +950,7 @@ function ExamPage() {
                 children: exam.description
             }, void 0, false, {
                 fileName: "[project]/src/app/exam/[examId]/page.tsx",
-                lineNumber: 132,
+                lineNumber: 140,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -964,7 +964,7 @@ function ExamPage() {
                                 children: "Tasks"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/exam/[examId]/page.tsx",
-                                lineNumber: 135,
+                                lineNumber: 145,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$create$2d$task$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CreateTaskDialog"], {
@@ -972,13 +972,13 @@ function ExamPage() {
                                 examId: examId
                             }, void 0, false, {
                                 fileName: "[project]/src/app/exam/[examId]/page.tsx",
-                                lineNumber: 136,
+                                lineNumber: 146,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/exam/[examId]/page.tsx",
-                        lineNumber: 134,
+                        lineNumber: 144,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -992,12 +992,12 @@ function ExamPage() {
                                             children: task.name
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/exam/[examId]/page.tsx",
-                                            lineNumber: 146,
+                                            lineNumber: 158,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/exam/[examId]/page.tsx",
-                                        lineNumber: 145,
+                                        lineNumber: 157,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1005,23 +1005,23 @@ function ExamPage() {
                                             children: task.criteria
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/exam/[examId]/page.tsx",
-                                            lineNumber: 149,
+                                            lineNumber: 161,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/exam/[examId]/page.tsx",
-                                        lineNumber: 148,
+                                        lineNumber: 160,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, task.id, true, {
                                 fileName: "[project]/src/app/exam/[examId]/page.tsx",
-                                lineNumber: 140,
+                                lineNumber: 150,
                                 columnNumber: 13
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/app/exam/[examId]/page.tsx",
-                        lineNumber: 138,
+                        lineNumber: 148,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1032,7 +1032,7 @@ function ExamPage() {
                                 children: "Upload Student Work"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/exam/[examId]/page.tsx",
-                                lineNumber: 155,
+                                lineNumber: 167,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1041,7 +1041,7 @@ function ExamPage() {
                                 onChange: handleImageUpload
                             }, void 0, false, {
                                 fileName: "[project]/src/app/exam/[examId]/page.tsx",
-                                lineNumber: 156,
+                                lineNumber: 170,
                                 columnNumber: 11
                             }, this),
                             image && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
@@ -1050,13 +1050,13 @@ function ExamPage() {
                                 className: "mt-2 rounded-md max-h-64 object-contain"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/exam/[examId]/page.tsx",
-                                lineNumber: 158,
+                                lineNumber: 172,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/exam/[examId]/page.tsx",
-                        lineNumber: 154,
+                        lineNumber: 166,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1067,7 +1067,7 @@ function ExamPage() {
                                 children: "Grading Report"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/exam/[examId]/page.tsx",
-                                lineNumber: 166,
+                                lineNumber: 180,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1077,7 +1077,7 @@ function ExamPage() {
                                 children: "Generate Report"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/exam/[examId]/page.tsx",
-                                lineNumber: 167,
+                                lineNumber: 183,
                                 columnNumber: 11
                             }, this),
                             gradingReport && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -1089,39 +1089,39 @@ function ExamPage() {
                                         className: "min-h-[200px]"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/exam/[examId]/page.tsx",
-                                        lineNumber: 173,
+                                        lineNumber: 193,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/exam/[examId]/page.tsx",
-                                    lineNumber: 172,
+                                    lineNumber: 192,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/exam/[examId]/page.tsx",
-                                lineNumber: 171,
+                                lineNumber: 191,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/exam/[examId]/page.tsx",
-                        lineNumber: 165,
+                        lineNumber: 179,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/exam/[examId]/page.tsx",
-                lineNumber: 133,
+                lineNumber: 143,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/exam/[examId]/page.tsx",
-        lineNumber: 130,
+        lineNumber: 138,
         columnNumber: 5
     }, this);
 }
-_s(ExamPage, "hOGbI+uzw1YufTbg2MIUnzvPvQU=", false, function() {
+_s(ExamPage, "c916BBMKKz6vOTxJQm2asCRmke8=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useToast"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useParams"]

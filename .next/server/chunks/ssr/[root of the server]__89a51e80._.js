@@ -260,21 +260,21 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 // Define the input schema for the grading report generation
 const GenerateGradingReportInputSchema = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$genkit$2f$lib$2f$common$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["z"].object({
     photoDataUri: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$genkit$2f$lib$2f$common$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["z"].string().describe("A photo of the student's work, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."),
-    taskCriteria: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$genkit$2f$lib$2f$common$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["z"].string().describe('The grading criteria for the specific task in the exam.')
+    taskCriteria: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$genkit$2f$lib$2f$common$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["z"].string().describe("The grading criteria for the specific task in the exam.")
 });
 // Define the output schema for the grading report
 const GenerateGradingReportOutputSchema = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$genkit$2f$lib$2f$common$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["z"].object({
-    report: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$genkit$2f$lib$2f$common$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["z"].string().describe('The AI-generated grading report.')
+    report: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$genkit$2f$lib$2f$common$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["z"].string().describe("The AI-generated grading report.")
 });
 // Define the tool to determine the relevancy of the student's work to the task
 const isImageRelevantToTask = __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$ai$2f$ai$2d$instance$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["ai"].defineTool({
-    name: 'isImageRelevantToTask',
-    description: 'Determines whether the information in the image is relevant to the specified task criteria.',
+    name: "isImageRelevantToTask",
+    description: "Determines whether the information in the image is relevant to the specified task criteria.",
     inputSchema: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$genkit$2f$lib$2f$common$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["z"].object({
         photoDataUri: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$genkit$2f$lib$2f$common$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["z"].string().describe("A photo of the student's work, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."),
-        taskCriteria: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$genkit$2f$lib$2f$common$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["z"].string().describe('The grading criteria for the specific task in the exam.')
+        taskCriteria: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$genkit$2f$lib$2f$common$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["z"].string().describe("The grading criteria for the specific task in the exam.")
     }),
-    outputSchema: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$genkit$2f$lib$2f$common$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["z"].boolean().describe('True if the image is relevant, false otherwise.')
+    outputSchema: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$genkit$2f$lib$2f$common$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["z"].boolean().describe("True if the image is relevant, false otherwise.")
 }, async (input)=>{
     // Placeholder implementation, replace with actual logic
     // For example, use a vision model to analyze the image content
@@ -285,19 +285,19 @@ const isImageRelevantToTask = __TURBOPACK__imported__module__$5b$project$5d2f$sr
 });
 // Define the prompt for generating the grading report
 const generateGradingReportPrompt = __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$ai$2f$ai$2d$instance$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["ai"].definePrompt({
-    name: 'generateGradingReportPrompt',
+    name: "generateGradingReportPrompt",
     tools: [
         isImageRelevantToTask
     ],
     input: {
         schema: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$genkit$2f$lib$2f$common$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["z"].object({
             photoDataUri: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$genkit$2f$lib$2f$common$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["z"].string().describe("A photo of the student's work, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."),
-            taskCriteria: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$genkit$2f$lib$2f$common$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["z"].string().describe('The grading criteria for the specific task in the exam.')
+            taskCriteria: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$genkit$2f$lib$2f$common$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["z"].string().describe("The grading criteria for the specific task in the exam.")
         })
     },
     output: {
         schema: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$genkit$2f$lib$2f$common$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["z"].object({
-            report: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$genkit$2f$lib$2f$common$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["z"].string().describe('The AI-generated grading report.')
+            report: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$genkit$2f$lib$2f$common$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["z"].string().describe("The AI-generated grading report.")
         })
     },
     prompt: `You are an AI grading assistant. Analyze the student's work in the image and generate a grading report in Russian based on the task criteria.
@@ -314,7 +314,7 @@ Generate a detailed report.
 });
 // Define the Genkit flow for generating the grading report
 const generateGradingReportFlow = __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$ai$2f$ai$2d$instance$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["ai"].defineFlow({
-    name: 'generateGradingReportFlow',
+    name: "generateGradingReportFlow",
     inputSchema: GenerateGradingReportInputSchema,
     outputSchema: GenerateGradingReportOutputSchema
 }, async (input)=>{
